@@ -839,6 +839,34 @@ ngx_feature_test="struct stat sb;
                   fstatat(AT_FDCWD, \".\", &sb, AT_SYMLINK_NOFOLLOW);"
 . auto/feature
 
+ngx_feature="log()"
+ngx_feature_name="NGX_HAVE_LOGARITHM"
+ngx_feature_run=yes
+ngx_feature_incs="#include <math.h>"
+ngx_feature_path=
+ngx_feature_libs=
+ngx_feature_test="#include <errno.h>
+                  #include <fenv.h>
+                  #include <math.h>
+                  errno = 0;
+                  feclearexcept(FE_ALL_EXCEPT);
+                  log(100);
+                  if (errno != 0) return 1;
+                  if (fetestexcept(FE_INVALID | FE_DIVBYZERO | FE_OVERFLOW |
+                        FE_UNDERFLOW) != 0) return 1;"
+. auto/feature
+
+if [ $ngx_found = no ]; then
+
+    # Linux has math functions in libm
+    ngx_feature="math functions in libm"
+    ngx_feature_libs=-lm
+    . auto/feature
+
+    if [ $ngx_found = yes ]; then
+        CORE_LIBS="$CORE_LIBS -lm"
+    fi
+fi
 
 ngx_feature="getaddrinfo()"
 ngx_feature_name="NGX_HAVE_GETADDRINFO"

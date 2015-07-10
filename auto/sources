@@ -431,6 +431,10 @@ HTTP_PROXY_SRCS=src/http/modules/ngx_http_proxy_module.c
 HTTP_FASTCGI_MODULE=ngx_http_fastcgi_module
 HTTP_FASTCGI_SRCS=src/http/modules/ngx_http_fastcgi_module.c
 
+HTTP_TRACKURI_MODULE=ngx_http_trackuri_module
+HTTP_TRACKURI_DEPS=src/http/ngx_http_uri_hash_table.h
+HTTP_TRACKURI_SRCS="src/http/ngx_http_uri_hash_table.c \
+                    src/http/modules/ngx_http_trackuri_module.c"
 
 HTTP_UWSGI_MODULE=ngx_http_uwsgi_module
 HTTP_UWSGI_SRCS=src/http/modules/ngx_http_uwsgi_module.c
